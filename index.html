@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>About me - Siomek</title>
+        <link rel="stylesheet" href="style.css">
+
+        <meta property="og:title" content="Siomek — Developer & Maker">
+        <meta property="og:description" content="I build software, hardware, and interactive projects that connect both worlds.">
+        <meta name="theme-color" content="#7e3fe8">
+
+    </head>
+    <body>
+        <canvas id="coolbg"></canvas>
+
+        <main>
+            <section class="introduction">
+
+                <h1>Hello!</h1>
+                <h2>I'm Siomek - I build software and hardware, from websites and games to Christmas lights!</h2>
+
+            </section>
+
+            <section class="myskills">
+                    
+                <h3>What I can do:</h3>
+                <div class="scrollable-div">
+                    <div class="card">
+                        <p class="title">Web Development</p>
+                        <p class="stack">Node.js, Express, PHP, HTML, CSS, JavaScript</p>
+                        <p class="description">I build fast, functional websites and web apps that actually work.</p>
+                    </div>
+
+                    <div class="card">
+                        <p class="title">Programming</p>
+                        <p class="stack">C#, C++, C, Python</p>
+                        <p class="description">I write clean, efficient code for apps, games, and tools.</p>
+                    </div>
+
+                    <div class="card">
+                        <p class="title">Linux & Systems</p>
+                        <p class="stack">Command line, server setup, configuration</p>
+                        <p class="description">I manage and configure Linux environments for development and deployment.</p>
+                    </div>
+
+                    <div class="card">
+                        <p class="title">IT</p>
+                        <p class="stack">Networking, PC building, troubleshooting</p>
+                        <p class="description">I design and troubleshoot networks, and build custom computer systems.</p>
+                    </div>
+
+                    <div class="card">
+                        <p class="title">Electronics</p>
+                        <p class="stack">Arduino, ESP32, sensors</p>
+                        <p class="description">I build interactive electronic projects using microcontrollers and sensors.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="socials">
+                <h3>My socials:</h3>
+                <div class="icon-container">
+                    <img src="discord.svg" alt="Discord Logo" class="icon">
+                    <span class="hover-text">Discord: @siomek101</span>
+                </div>
+                <a href="mailto:frakom@bubbleam.pl" target="_blank">
+                    <div class="icon-container" style="position: relative; top:-1rem;">
+                        <b class="icon" style="color:black; font-size: 2rem;">@</b>
+                        <span class="hover-text">Email: frakom@bubbleam.pl</span>
+                    </div>
+                </a>
+                <a href="https://github.com/Siomek101" target="_blank">
+                    <div class="icon-container">
+                        <img src="github.svg" alt="Github Logo" class="icon">
+                        <span class="hover-text">Github github.com/Siomek101</span>
+                    </div>
+                </a>
+
+            </section>
+            <section>
+                <h3>Cool stuff:</h3>
+                <div class="scrollable-div">
+                    <div class="card">
+                        <p class="title">Bubbleam.pl</p>
+                        <p class="description">A cool Agar.io-like game, with unique events and point system!</p>
+                        <a class="stack" href="https://bubbleam.pl">Open</a>
+                    </div>
+                    <div class="card">
+                        <p class="title">Fireflies</p>
+                        <p class="description">Like the current background? You can use it as a wallpaper! (for example in Lively Wallpaper)</p>
+                        <a class="stack" href="fireflies.html">Open</a>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+        <footer>
+            <br><br><br><br>
+        </footer>
+
+                <script>
+            const c = document.getElementById('coolbg');
+            const ctx = c.getContext('2d');
+            c.width = innerWidth; c.height = innerHeight;
+
+            function rancolor() {
+                const h = Math.random() * 360;
+                const s = 0.8;
+                const v = 0.9;
+                
+                const c = v * s;
+                const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+                const m = v - c;
+                
+                let [r, g, b] = [0, 0, 0];
+                if (h < 60) [r, g, b] = [c, x, 0];
+                else if (h < 120) [r, g, b] = [x, c, 0];
+                else if (h < 180) [r, g, b] = [0, c, x];
+                else if (h < 240) [r, g, b] = [0, x, c];
+                else if (h < 300) [r, g, b] = [x, 0, c];
+                else [r, g, b] = [c, 0, x];
+                
+                const toHex = n => Math.round((n + m) * 255).toString(16).padStart(2, "0");
+                return "#" + toHex(r) + toHex(g) + toHex(b);
+            }
+
+            var ax = 0;
+            var ay = 0;
+            let stars = Array.from({length: 800}, () => ({
+                x: Math.random() * c.width,
+                y: Math.random() * c.height,
+                r: Math.random() * 2.5+1,
+                dx: (Math.random() - 0.5) * 1,
+                dy: (Math.random() - 0.5) * 1,
+                color: rancolor()
+            }));
+            document.body.addEventListener('mousemove', e => {
+                ax = ax/1.2 + (e.clientX / innerWidth - 0.5) * 10;
+                ay = ay/1.2 + (e.clientY / innerHeight - 0.5) * 10;
+                
+            });
+
+            function draw() {
+                ctx.clearRect(0, 0, c.width, c.height);
+                ctx.fillStyle = "white";
+                for (let s of stars) {
+                    ctx.fillStyle = s.color;
+                    s.x += s.dx; s.y += s.dy;
+                    // wall "collision"
+                    if (s.x < 0 || s.x > c.width) s.dx *= -1;
+                    if (s.y < 0 || s.y > c.height) s.dy *= -1;
+                    ctx.beginPath();
+                    ctx.arc(s.x+ax, s.y+ay, s.r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                requestAnimationFrame(draw);
+            }
+            draw();
+            
+
+        </script>
+    </body>
+</html>

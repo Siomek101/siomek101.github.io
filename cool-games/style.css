@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.roboto-300, :root {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+:root {
+    --color-50:  #f5f3ff;
+    --color-100: #edeafd;
+    --color-200: #ded7fd;
+    --color-300: #c5b7fb;
+    --color-400: #a98ef7;
+    --color-500: #8d60f2;
+    --color-600: #7e3fe8;
+    --color-700: #6f2dd4;
+    --color-800: #4a1a97;
+    --color-900: #1e0c6b;
+    --color-950: #280d58;
+    --color-dark: #1a053d;
+    background: var(--color-dark);
+    color: var(--color-100);
+}

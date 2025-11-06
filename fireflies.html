@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>fireflies</title>
+        <style>
+            :root {
+                background: black;
+            }
+            #coolbg {
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                z-index: -1;
+                background: var(--color-950);
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="coolbg"></canvas>
+        <script>
+            const c = document.getElementById('coolbg');
+            const ctx = c.getContext('2d');
+            c.width = innerWidth; c.height = innerHeight;
+
+            function rancolor() {
+                const h = Math.random() * 360;
+                const s = 0.8;
+                const v = 0.9;
+                
+                const c = v * s;
+                const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+                const m = v - c;
+                
+                let [r, g, b] = [0, 0, 0];
+                if (h < 60) [r, g, b] = [c, x, 0];
+                else if (h < 120) [r, g, b] = [x, c, 0];
+                else if (h < 180) [r, g, b] = [0, c, x];
+                else if (h < 240) [r, g, b] = [0, x, c];
+                else if (h < 300) [r, g, b] = [x, 0, c];
+                else [r, g, b] = [c, 0, x];
+                
+                const toHex = n => Math.round((n + m) * 255).toString(16).padStart(2, "0");
+                return "#" + toHex(r) + toHex(g) + toHex(b);
+            }
+
+            var ax = 0;
+            var ay = 0;
+            let stars = Array.from({length: 800}, () => ({
+                x: Math.random() * c.width,
+                y: Math.random() * c.height,
+                r: Math.random() * 2.5+1,
+                dx: (Math.random() - 0.5) * 1,
+                dy: (Math.random() - 0.5) * 1,
+                color: rancolor()
+            }));
+            document.body.addEventListener('mousemove', e => {
+                ax = ax/1.2 + (e.clientX / innerWidth - 0.5) * 10;
+                ay = ay/1.2 + (e.clientY / innerHeight - 0.5) * 10;
+                
+            });
+
+            function draw() {
+                ctx.clearRect(0, 0, c.width, c.height);
+                ctx.fillStyle = "white";
+                for (let s of stars) {
+                    ctx.fillStyle = s.color;
+                    s.x += s.dx; s.y += s.dy;
+                    // wall "collision"
+                    if (s.x < 0 || s.x > c.width) s.dx *= -1;
+                    if (s.y < 0 || s.y > c.height) s.dy *= -1;
+                    ctx.beginPath();
+                    ctx.arc(s.x+ax, s.y+ay, s.r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                requestAnimationFrame(draw);
+            }
+            draw();
+            
+
+        </script>
+    </body>
+</html>

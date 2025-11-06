@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.roboto-300, :root {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+:root {
+    --color-50:  #f5f3ff;
+    --color-100: #edeafd;
+    --color-200: #ded7fd;
+    --color-300: #c5b7fbaa;
+    --color-400: #a98ef7aa;
+    --color-500: #8d60f2aa;
+    --color-600: #7e3fe8aa;
+    --color-700: #6f2dd4aa;
+    --color-800: #4a1a97aa;
+    --color-900: #1e0c6baa;
+    --color-950: #280d58aa;
+    
+    --color-700-tr: #6f2dd455;
+    --color-800-tr: #4a1a9766;
+    --color-900-tr: #1e0c6b77;
+    background: var(--color-950);
+    color: var(--color-100);
+}
+body {
+    margin:0;
+}
+#coolbg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background: var(--color-950);
+}
+main {
+    background: var(--color-900-tr);
+    margin: 0;
+    padding-bottom: 2rem;
+    position: absolute;
+    --margincalc: max(100px,10vw);
+    left: var(--margincalc);
+    right: var(--margincalc);
+    top: 50px;
+    min-height: calc(100vh - 100px);
+    text-align: center;
+    border-radius: 2rem;
+    
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(3px);
+    animation: water 6s ease-in-out infinite;
+    background: linear-gradient(120deg, var(--color-900-tr), var(--color-800-tr), var(--color-700-tr));
+    background-size: 200% 200%;
+    transition: transform 100ms ease;
+    animation: gradientShift 10s ease infinite;
+    
+}
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes water {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  50% { transform: translateY(-5px) translateX(-5px); }
+}
+@media screen and (max-width: 600px) {
+    main {
+        --margincalc: 50px;
+    }
+}
+
+a {
+    color: var(--color-100);
+}
+
+.scrollable-div {
+    background: var(--color-800);
+    padding: 2rem;
+    width: calc(100vw - 2 * var(--margincalc) - 6rem);
+    display: flex;
+    gap:1.7rem;
+    border-radius: 2rem;
+    overflow-x:auto;
+    overflow-y:hidden;
+    margin-inline: 1rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.329);
+}
+
+.card {
+    transform: scale(1);
+    position: relative;
+    flex: 0 0 14.5rem;
+    width: 14.5rem;
+    background: var(--color-900);
+    padding: 1rem;
+    height: 16rem;
+    border-radius: 2rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.568);
+    overflow: visible;
+    transition: all 100ms linear;
+}
+.card:hover {
+    transform: scale(1.1);
+}
+.title {
+    font-weight: 500;
+}
+.stack {
+    font-weight: 400;
+}
+
+.icon-container {
+    position: relative; 
+    display: inline-block;
+    cursor: pointer;
+    background: var(--color-100);
+    padding: 1rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 2rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.329);
+}
+
+.icon-container .icon {
+    width: 3rem;
+}
+
+.icon-container .hover-text {
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-800);
+    color: var(--color-50);
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    font-weight: 400;
+    font-size: 0.9rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    white-space: nowrap; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.icon-container:hover .hover-text {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px); 
+}
