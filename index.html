@@ -9,7 +9,7 @@
         <meta property="og:title" content="Siomek - Developer & Maker">
         <meta property="og:description" content="I build software, hardware, and interactive projects that connect both worlds.">
         <meta name="theme-color" content="#7e3fe8">
-
+        <link rel="icon" href="katze.webp">
     </head>
     <body>
         <canvas id="coolbg"></canvas>
@@ -126,29 +126,51 @@
 
             var ax = 0;
             var ay = 0;
-            let stars = Array.from({length: 800}, () => ({
+            let maxStars = window.innerWidth < 600 ? 200 : 800;
+            let stars = Array.from({length: maxStars}, () => ({
                 x: Math.random() * c.width,
                 y: Math.random() * c.height,
                 r: Math.random() * 2.5+1,
                 dx: (Math.random() - 0.5) * 1,
                 dy: (Math.random() - 0.5) * 1,
-                color: rancolor()
+                color: rancolor(),
+                getSmaller: false,
+                gravity: 0,
+                bounce: 1,
             }));
             document.body.addEventListener('mousemove', e => {
                 ax = ax/1.2 + (e.clientX / innerWidth - 0.5) * 10;
                 ay = ay/1.2 + (e.clientY / innerHeight - 0.5) * 10;
-                
+                // add some sparks :)
+                Array.from({length: 2}, ()=>{
+                    stars.push({
+                        x: (e.clientX / innerWidth) * c.width + (Math.random()*20),
+                        y: (e.clientY / innerHeight) * c.height + (Math.random()*20),
+                        r: Math.random() * 2+0.5,
+                        dx: (Math.random() - 0.5) * 9,
+                        dy: (Math.random() - 0.5) * 1,
+                        color: "#aaaa55", // yellow-ish color
+                        getSmaller: true,
+                        gravity: 0.3,
+                        bounce: 0.9,
+                    })
+                });
             });
 
             function draw() {
                 ctx.clearRect(0, 0, c.width, c.height);
                 ctx.fillStyle = "white";
                 for (let s of stars) {
+                    if(s.getSmaller) 
+                        s.r *= 0.999;
+                    if(s.r <= 0.9) delete s;
+                    if(s.gravity) s.dy += s.gravity;
                     ctx.fillStyle = s.color;
                     s.x += s.dx; s.y += s.dy;
+                    
                     // wall "collision"
-                    if (s.x < 0 || s.x > c.width) s.dx *= -1;
-                    if (s.y < 0 || s.y > c.height) s.dy *= -1;
+                    if (s.x < 0 || s.x > c.width) s.dx *= -s.bounce;
+                    if (s.y < 0 || s.y > c.height) s.dy *= -s.bounce;
                     ctx.beginPath();
                     ctx.arc(s.x+ax, s.y+ay, s.r, 0, Math.PI * 2);
                     ctx.fill();
