@@ -21,7 +21,26 @@
                 <h2>I'm Siomek - I build software and hardware, from websites and games to Christmas lights!</h2>
 
             </section>
+            <section class="socials">
+                <h3>My socials:</h3>
+                <div class="icon-container">
+                    <img src="discord.svg" alt="Discord Logo" class="icon">
+                    <span class="hover-text">Discord: @siomek101</span>
+                </div>
+                <a href="mailto:frakom@bubbleam.pl" target="_blank">
+                    <div class="icon-container" style="position: relative; top:-0.5rem;">
+                        <b class="icon" style="color:black; font-size: 1.5rem;">@</b>
+                        <span class="hover-text">Email: frakom@bubbleam.pl</span>
+                    </div>
+                </a>
+                <a href="https://github.com/Siomek101" target="_blank">
+                    <div class="icon-container">
+                        <img src="github.svg" alt="Github Logo" class="icon">
+                        <span class="hover-text">Github github.com/Siomek101</span>
+                    </div>
+                </a>
 
+            </section>
             <section class="myskills">
                     
                 <h3>What I can do:</h3>
@@ -57,26 +76,7 @@
                     </div>
                 </div>
             </section>
-            <section class="socials">
-                <h3>My socials:</h3>
-                <div class="icon-container">
-                    <img src="discord.svg" alt="Discord Logo" class="icon">
-                    <span class="hover-text">Discord: @siomek101</span>
-                </div>
-                <a href="mailto:frakom@bubbleam.pl" target="_blank">
-                    <div class="icon-container" style="position: relative; top:-1rem;">
-                        <b class="icon" style="color:black; font-size: 2rem;">@</b>
-                        <span class="hover-text">Email: frakom@bubbleam.pl</span>
-                    </div>
-                </a>
-                <a href="https://github.com/Siomek101" target="_blank">
-                    <div class="icon-container">
-                        <img src="github.svg" alt="Github Logo" class="icon">
-                        <span class="hover-text">Github github.com/Siomek101</span>
-                    </div>
-                </a>
 
-            </section>
             <section>
                 <h3>Cool stuff:</h3>
                 <div class="scrollable-div">
@@ -149,15 +149,16 @@
                         r: Math.random() * 2+0.5,
                         dx: (Math.random() - 0.5) * 9,
                         dy: (Math.random() - 0.5) * 1,
-                        color: "#aaaa55", // yellow-ish color
+                        color: "#ffff55", // yellow-ish color
                         getSmaller: true,
                         gravity: 0.3,
-                        bounce: 0.9,
+                        bounce: 0.5,
                     })
                 });
             });
 
             function draw() {
+                c.width = innerWidth; c.height = innerHeight;
                 ctx.clearRect(0, 0, c.width, c.height);
                 ctx.fillStyle = "white";
                 for (let s of stars) {
